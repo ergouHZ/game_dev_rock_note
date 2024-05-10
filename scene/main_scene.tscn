@@ -1,0 +1,113 @@
+[gd_scene load_steps=11 format=3 uid="uid://cdxy7usdianlc"]
+
+[ext_resource type="Material" uid="uid://bwi8tl10qeipy" path="res://art_assets/shader/JitterFreePixelArt.tres" id="1_q60j8"]
+[ext_resource type="Script" path="res://hello_world.gd" id="2_m0yqt"]
+[ext_resource type="PackedScene" uid="uid://bfxnk8q8b1203" path="res://scene/city_Main.tscn" id="3_qoq2v"]
+[ext_resource type="PackedScene" uid="uid://hkmaokryevqj" path="res://characters/player.tscn" id="4_yl16i"]
+[ext_resource type="Texture2D" uid="uid://l75y2gb3jql0" path="res://icon.svg" id="6_3xdah"]
+
+[sub_resource type="GDScript" id="GDScript_0101q"]
+script/source = "extends Button
+
+# 定义一个名为\"custom_signal\"的信号，它接受一个字符串参数
+signal custom_signal()
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	pass # Replace with function body.
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta):
+	pass
+
+func _buttonClick():
+	var label:Label = $\"../Label\"
+	emit_signal(\"custom_signal\")
+
+
+	
+"
+
+[sub_resource type="Animation" id="Animation_touyb"]
+resource_name = "idle"
+
+[sub_resource type="Animation" id="Animation_i0wll"]
+resource_name = "run"
+length = 1.5
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimationPlayer/Icon:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.7, 1.5),
+"transitions": PackedFloat32Array(1, 1.68179, 1),
+"update": 0,
+"values": [Vector2(1080, 328), Vector2(1216, 448), Vector2(1080, 328)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_xtf8f"]
+_data = {
+"idle": SubResource("Animation_touyb"),
+"run": SubResource("Animation_i0wll")
+}
+
+[sub_resource type="GDScript" id="GDScript_uaear"]
+resource_name = "signal_test"
+script/source = "extends Sprite2D
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	pass # Replace with function body.
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta):
+	pass
+
+func signalConnect():
+	print(\"signal received!\")
+"
+
+[node name="Node2D" type="Node2D"]
+texture_filter = 2
+material = ExtResource("1_q60j8")
+script = ExtResource("2_m0yqt")
+
+[node name="Node2D" parent="." instance=ExtResource("3_qoq2v")]
+position = Vector2(64, 72)
+
+[node name="Label" type="Label" parent="."]
+offset_left = 1424.0
+offset_top = 408.0
+offset_right = 1663.0
+offset_bottom = 450.0
+text = "hello"
+
+[node name="player" parent="." instance=ExtResource("4_yl16i")]
+
+[node name="Button" type="Button" parent="."]
+offset_left = 1432.0
+offset_top = 360.0
+offset_right = 1512.0
+offset_bottom = 392.0
+script = SubResource("GDScript_0101q")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_xtf8f")
+}
+autoplay = "run"
+
+[node name="Icon" type="Sprite2D" parent="AnimationPlayer"]
+visible = false
+position = Vector2(1216, 448)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("6_3xdah")
+script = SubResource("GDScript_uaear")
+
+[connection signal="custom_signal" from="Button" to="AnimationPlayer/Icon" method="signalConnect"]
+[connection signal="pressed" from="Button" to="Button" method="_buttonClick"]
