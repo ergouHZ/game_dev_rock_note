@@ -22,6 +22,7 @@ func _process(delta):
 
 func _buttonClick():
 	var label:Label = $\"../Label\"
+	label.text = \"hello 11111\"
 	emit_signal(\"custom_signal\")
 
 
