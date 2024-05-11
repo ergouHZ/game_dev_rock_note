@@ -1,14 +1,11 @@
 extends CharacterBody2D
 
 
-const SPEED = 300.0
+const SPEED:int = 250
 const JUMP_VELOCITY = -400.0
 
-# Get the gravity from the project settings to be synced with RigidBody nodes.
-var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 
-
-func _physics_process(delta):
+func _process(delta):
 	# Handle jump.
 	if Input.is_action_just_pressed("up"):
 		Dialogic.start("res://dialog/timeline/timeline1.dtl")
@@ -18,8 +15,8 @@ func _physics_process(delta):
 	var direction = Input.get_axis("left", "right")
 	if direction:
 		velocity.x = direction * SPEED
-		playerSprite.play("left")
+		#playerSprite.play("left")
 	else:
 		velocity.x = move_toward(velocity.x, 0, SPEED)
-		playerSprite.stop()
+		#playerSprite.stop()
 	move_and_slide()
