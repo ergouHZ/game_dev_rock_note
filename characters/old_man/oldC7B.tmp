@@ -1,0 +1,121 @@
+[gd_scene load_steps=12 format=3 uid="uid://c86ct58wp4oji"]
+
+[ext_resource type="Material" uid="uid://bwi8tl10qeipy" path="res://art_assets/shader/JitterFreePixelArt.tres" id="1_jnxvl"]
+[ext_resource type="Texture2D" uid="uid://2sacetq7snxh" path="res://art_assets/characters_sprite/townspeople-cyberpunk-pixel-art/8/Idle.png" id="2_8ucvx"]
+
+[sub_resource type="GDScript" id="GDScript_uoylw"]
+script/source = "extends CharacterBody2D
+
+func _ready():
+	#播放默认动画
+	$AnimatedSprite2D.play(\"idle\")
+	
+
+
+	
+	
+"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_51e11"]
+atlas = ExtResource("2_8ucvx")
+region = Rect2(0, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_v4b7o"]
+atlas = ExtResource("2_8ucvx")
+region = Rect2(48, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_72o6f"]
+atlas = ExtResource("2_8ucvx")
+region = Rect2(96, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_phyin"]
+atlas = ExtResource("2_8ucvx")
+region = Rect2(144, 0, 48, 48)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_0f6a6"]
+animations = [{
+"frames": [{
+"duration": 2.0,
+"texture": SubResource("AtlasTexture_51e11")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_v4b7o")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_72o6f")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_72o6f")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_phyin")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_72o6f")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_jpq2l"]
+radius = 8.0
+
+[sub_resource type="GDScript" id="GDScript_36yrr"]
+script/source = "extends Area2D
+
+var is_interactable:bool=false
+
+func _process(delta):
+	if Input.is_action_just_pressed(\"ui_accept\")&&is_interactable:  # enter key
+		Dialogic.play(\"res://dialog/timeline/timeline1.dtl\")
+
+func _on_area_interact(area:Area2D):
+	is_interactable=true
+	print(\"in npc entered\")
+	print(\"in cpn\"+area.get_parent().name)
+
+
+func _on_area_exited(area):
+	is_interactable=false
+	print(\"in npc area exit!\")
+	pass # Replace with function body.
+"
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_7wcli"]
+radius = 12.0
+
+[node name="npc_old_man" type="CharacterBody2D"]
+collision_layer = 5
+script = SubResource("GDScript_uoylw")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+texture_filter = 2
+material = ExtResource("1_jnxvl")
+position = Vector2(8, -10)
+sprite_frames = SubResource("SpriteFrames_0f6a6")
+animation = &"idle"
+frame_progress = 0.872459
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+collision_mask = 0
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D"]
+position = Vector2(9, -11)
+polygon = PackedVector2Array(-9, 8, -6, 9, -3, 9, -1, 14, 1, 18, 1, 21, -8, 24, -16, 23, -18, 13, -13, 9, -4, 6)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_jpq2l")
+disabled = true
+
+[node name="interactArea" type="Area2D" parent="."]
+collision_layer = 4
+collision_mask = 4
+script = SubResource("GDScript_36yrr")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="interactArea"]
+position = Vector2(0, 2)
+shape = SubResource("CircleShape2D_7wcli")
+
+[connection signal="area_entered" from="interactArea" to="interactArea" method="_on_area_interact"]
+[connection signal="area_exited" from="interactArea" to="interactArea" method="_on_area_exited"]

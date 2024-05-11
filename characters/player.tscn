@@ -1,4 +1,4 @@
-[gd_scene load_steps=41 format=3 uid="uid://hkmaokryevqj"]
+[gd_scene load_steps=45 format=3 uid="uid://hkmaokryevqj"]
 
 [ext_resource type="Material" uid="uid://bwi8tl10qeipy" path="res://art_assets/shader/JitterFreePixelArt.tres" id="1_c6rpv"]
 [ext_resource type="Script" path="res://characters/player.gd" id="2_ckke8"]
@@ -35,6 +35,18 @@ region = Rect2(457, 651, 46, 53)
 [sub_resource type="AtlasTexture" id="AtlasTexture_ldcwq"]
 atlas = ExtResource("2_vnxwg")
 region = Rect2(521, 651, 46, 53)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vkjns"]
+atlas = ExtResource("2_vnxwg")
+region = Rect2(9, 651, 46, 53)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lj8kj"]
+atlas = ExtResource("2_vnxwg")
+region = Rect2(329, 651, 46, 53)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_y88b8"]
+atlas = ExtResource("2_vnxwg")
+region = Rect2(393, 651, 46, 53)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_wilbi"]
 atlas = ExtResource("2_vnxwg")
@@ -176,6 +188,23 @@ animations = [{
 "speed": 12.0
 }, {
 "frames": [{
+"duration": 20.0,
+"texture": SubResource("AtlasTexture_vkjns")
+}, {
+"duration": 2.0,
+"texture": SubResource("AtlasTexture_lj8kj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_y88b8")
+}, {
+"duration": 2.0,
+"texture": SubResource("AtlasTexture_lj8kj")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 8.0
+}, {
+"frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_wilbi")
 }, {
@@ -275,6 +304,9 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wfi8l"]
 size = Vector2(33.032, 35.8064)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_brihn"]
+size = Vector2(46.1518, 5.25)
+
 [node name="player" type="CharacterBody2D"]
 texture_filter = 2
 material = ExtResource("1_c6rpv")
@@ -283,18 +315,28 @@ script = ExtResource("2_ckke8")
 [node name="playerSprite" type="AnimatedSprite2D" parent="."]
 texture_filter = 2
 use_parent_material = true
-position = Vector2(1304, 440)
+position = Vector2(0, -1.90735e-06)
 scale = Vector2(1.4937, 1.4937)
 sprite_frames = SubResource("SpriteFrames_34eoj")
-animation = &"down"
-metadata/_edit_group_ = true
+animation = &"idle"
+frame_progress = 0.160984
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(1304, 468)
+position = Vector2(2.00012, 21)
 scale = Vector2(1.45314, 0.670271)
 shape = SubResource("RectangleShape2D_wfi8l")
 
 [node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2(1304, 440)
+position = Vector2(0, -50)
 scale = Vector2(1.1, 1.1)
 drag_top_margin = 0.3
+
+[node name="interactArea" type="Area2D" parent="."]
+position = Vector2(40, 0)
+collision_layer = 4
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="interactArea"]
+scale = Vector2(0.886787, 1)
+shape = SubResource("RectangleShape2D_brihn")
+debug_color = Color(0.574356, 0.554329, 3.85046e-07, 0.42)

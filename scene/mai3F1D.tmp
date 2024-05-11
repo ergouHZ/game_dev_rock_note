@@ -5,7 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://bfxnk8q8b1203" path="res://scene/city_Main.tscn" id="3_qoq2v"]
 [ext_resource type="PackedScene" uid="uid://hkmaokryevqj" path="res://characters/player.tscn" id="4_yl16i"]
 [ext_resource type="Texture2D" uid="uid://l75y2gb3jql0" path="res://icon.svg" id="6_3xdah"]
-[ext_resource type="PackedScene" uid="uid://c86ct58wp4oji" path="res://characters/old_man/npc_template.tscn" id="6_ktvnp"]
+[ext_resource type="PackedScene" uid="uid://c86ct58wp4oji" path="res://characters/old_man/old_man_test.tscn" id="6_ktvnp"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_fobg1"]
 shader = ExtResource("2_n4dpu")
@@ -89,7 +89,6 @@ texture = ExtResource("6_3xdah")
 
 [node name="map" parent="." instance=ExtResource("3_qoq2v")]
 position = Vector2(64, 72)
-scale = Vector2(1, 0.991708)
 
 [node name="Label" type="Label" parent="."]
 offset_left = 1424.0
@@ -120,7 +119,7 @@ scale = Vector2(0.5, 0.5)
 texture = ExtResource("6_3xdah")
 script = SubResource("GDScript_uaear")
 
-[node name="test_npc" parent="." instance=ExtResource("6_ktvnp")]
+[node name="Node2D" parent="." instance=ExtResource("6_ktvnp")]
 position = Vector2(1443, 525)
 scale = Vector2(2, 2)
 
