@@ -86,7 +86,7 @@ offset_left = 1424.0
 offset_top = 408.0
 offset_right = 1663.0
 offset_bottom = 450.0
-text = "hello"
+text = "hello zhan"
 
 [node name="player" parent="." instance=ExtResource("4_yl16i")]
 
