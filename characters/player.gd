@@ -72,7 +72,7 @@ func _process(delta):
 			playerSprite.play("idle")
 		move_and_slide()
 	else:
-		playerSprite.stop()
+		playerSprite.stop() #对话中暂停动画
 		
 		
 func start_dialog():
