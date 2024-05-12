@@ -1,6 +1,6 @@
 extends CharacterBody2D
 
-@export var SPEED: int = 250
+@export var SPEED: int = 250  #移动速度最好与屏幕整除，减少模糊
 var timer = 0 # 计时器
 const STOP_MOVEMENT_THRESHOLD = 20 # 开始计时的速度阈值
 var is_animation_paused = false  # 新增的布尔变量，用于判断动画暂停的瞬间
@@ -81,7 +81,7 @@ func start_dialog():
 	print("dialog started！")
 
 func _on_timeline_ended():
-	is_in_conversation = false #在对话中 无法操作
+	is_in_conversation = false #结束对话 可以操作
 	print("dialog ended!")
 	#结束时取消信号链接，并发送对话结束的信号
 	Dialogic.timeline_ended.disconnect(_on_timeline_ended)
