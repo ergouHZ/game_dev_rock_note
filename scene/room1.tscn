@@ -1,0 +1,73 @@
+[gd_scene load_steps=10 format=3 uid="uid://3sq7fd3ces2m"]
+
+[ext_resource type="Texture2D" uid="uid://c3pd6o0aqkcik" path="res://art_assets/test_res/room.png" id="1_qns0r"]
+[ext_resource type="PackedScene" uid="uid://hkmaokryevqj" path="res://characters/player.tscn" id="2_kwxg6"]
+[ext_resource type="Script" path="res://scene/portal.gd" id="3_5tsq5"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_brcmb"]
+size = Vector2(344.462, 26.354)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_smihu"]
+size = Vector2(446, 78)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_343bt"]
+size = Vector2(309, 20)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_v15wr"]
+size = Vector2(91, 519)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_l1pqo"]
+size = Vector2(58.5, 374.5)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ywmy1"]
+size = Vector2(40, 28.5)
+
+[node name="Node2D" type="Node2D"]
+
+[node name="Room" type="Sprite2D" parent="."]
+position = Vector2(1, -2)
+scale = Vector2(0.573878, 0.573878)
+texture = ExtResource("1_qns0r")
+
+[node name="player" parent="." instance=ExtResource("2_kwxg6")]
+position = Vector2(-63, 127)
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(1, -27)
+scale = Vector2(1.16019, 1.17736)
+shape = SubResource("RectangleShape2D_brcmb")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(169, 216)
+shape = SubResource("RectangleShape2D_smihu")
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(-268, 185)
+shape = SubResource("RectangleShape2D_343bt")
+
+[node name="CollisionShape2D4" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(-234, 63)
+shape = SubResource("RectangleShape2D_v15wr")
+
+[node name="CollisionShape2D5" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(231, 53)
+shape = SubResource("RectangleShape2D_l1pqo")
+
+[node name="portal" type="Area2D" parent="." groups=["portal"]]
+collision_layer = 8
+collision_mask = 8
+script = ExtResource("3_5tsq5")
+next_scene_path = "res://scene/main_scene.tscn"
+spawn_point = "spawn_room_test"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="portal"]
+position = Vector2(-87, 204)
+shape = SubResource("RectangleShape2D_ywmy1")
+debug_color = Color(0.717647, 0.478431, 0.121569, 0.737255)
+
+[node name="room_1_enter" type="Marker2D" parent="."]
+position = Vector2(-87, 157)
+
+[connection signal="area_entered" from="portal" to="portal" method="_on_area_entered"]

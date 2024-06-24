@@ -1,0 +1,42 @@
+[gd_scene load_steps=6 format=3 uid="uid://hf7iwsaq3ga1"]
+
+[ext_resource type="Texture2D" uid="uid://d2o3jcg7iao4u" path="res://art_assets/test_res/house.png" id="1_c41fe"]
+[ext_resource type="Script" path="res://scene/enterTheDoor.gd" id="2_qfvbn"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_osnv6"]
+size = Vector2(245.5, 40)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7rrbx"]
+size = Vector2(146.5, 38.5)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_y2c7a"]
+size = Vector2(58.25, 38.25)
+
+[node name="Node2D" type="Node2D"]
+
+[node name="House" type="Sprite2D" parent="."]
+texture = ExtResource("1_c41fe")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(-99.75, 36)
+shape = SubResource("RectangleShape2D_osnv6")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(162.75, 37.75)
+shape = SubResource("RectangleShape2D_7rrbx")
+
+[node name="enterTheDoor" type="Area2D" parent="."]
+collision_layer = 8
+collision_mask = 8
+script = ExtResource("2_qfvbn")
+next_scene_path = "res://scene/room1.tscn"
+spawn_point = "room_1_enter"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="enterTheDoor"]
+position = Vector2(56.875, 13.875)
+shape = SubResource("RectangleShape2D_y2c7a")
+debug_color = Color(0.690196, 0.494118, 0.215686, 0.862745)
+
+[connection signal="area_entered" from="enterTheDoor" to="enterTheDoor" method="_on_area_entered"]

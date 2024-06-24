@@ -1,5 +1,5 @@
 extends CharacterBody2D
-
+@onready var transition_rect = $TransitionColorRect #动画遮罩
 @export var SPEED: int = 250
 var timer = 0 # 计时器
 const STOP_MOVEMENT_THRESHOLD = 20 # 开始计时的速度阈值
@@ -7,24 +7,36 @@ var is_animation_paused = false  # 新增的布尔变量，用于判断动画暂
 var is_in_conversation = false # 用于判断角色是否在对话中，如果是的话，不能操作
 
 func _ready():
+	transition_rect.color = Color(0, 0, 0, 1)  # 确保初始状态是透明的
+	fade_in()
+	
+	if Global.player_direction != "" :
+		$playerSprite.play(Global.player_direction)
+		$playerSprite.stop()
+	
 	Dialogic.timeline_started.connect(start_dialog) #获取对话开始信号并传递至函数
+	
 
 func _process(delta):
 	var input_direction = Vector2.ZERO #获取输入的向量
 	var playerSprite: AnimatedSprite2D = $playerSprite
-	var interactArea: Area2D = $interactArea
+	var interactArea: Area2D = $interactArea_Dialog
 	
 	#当玩家处于对话外的时候才能操作
-	if not is_in_conversation:
-		# 获取用户输入
+	if not is_in_conversation and Global.player_is_movable:
+		# 获取用户输入 并播放对应方向动画
 		if Input.is_action_pressed("up"):
 			input_direction.y -= 1
+			Global.player_direction = "up" #处理进入房间后的朝向
 		elif Input.is_action_pressed("down"):
 			input_direction.y += 1
+			Global.player_direction = "down"
 		if Input.is_action_pressed("left"):
 			input_direction.x -= 1
+			Global.player_direction = "left"
 		elif Input.is_action_pressed("right"):
 			input_direction.x += 1
+			Global.player_direction = "right"
 
 		# 处理动画
 		if input_direction != Vector2.ZERO:
@@ -86,4 +98,15 @@ func _on_timeline_ended():
 	#结束时取消信号链接，并发送对话结束的信号
 	Dialogic.timeline_ended.disconnect(_on_timeline_ended)
 	# do something else here
+	
+
+func fade_out():
+	var tween = create_tween()
+	tween.tween_property(transition_rect, "color", Color(0, 0, 0, 1), 0.5)
+
+func fade_in():
+	print("fade in")
+	transition_rect.color = Color(0, 0, 0, 1)  # 先设置为不透明
+	var tween = create_tween()
+	tween.tween_property(transition_rect, "color", Color(0, 0, 0, 0), 0.5)
 

@@ -17,12 +17,15 @@ config/icon="res://icon.svg"
 
 [autoload]
 
+SceneManager="*res://script/SceneManager.gd"
+Global="*res://script/Global.gd"
 Dialogic="*res://addons/dialogic/Core/DialogicGameHandler.gd"
 
 [dialogic]
 
 directories/dch_directory={
-"character_antonio_test": "res://dialog/character/character_antonio_test.dch"
+"character_antonio_test": "res://dialog/character/character_antonio_test.dch",
+"nvzhu": "res://characters/nvzhu/nvzhu.dch"
 }
 directories/dtl_directory={
 "timeline1": "res://dialog/timeline/timeline1.dtl"
@@ -62,7 +65,7 @@ enabled=PackedStringArray("res://addons/dialogic/plugin.cfg")
 
 [gui]
 
-theme/custom_font="res://art_assets/Silver像素体（建议先保存，再下载）/Silver.ttf"
+theme/custom_font="res://art_assets/SilverFotn/Silver.ttf"
 
 [importer_defaults]
 
@@ -106,3 +109,4 @@ dialogic_default_action={
 
 2d_physics/layer_1="people"
 2d_physics/layer_3="interact"
+2d_physics/layer_4="area_change_scene_entry"
