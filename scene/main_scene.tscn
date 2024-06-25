@@ -117,6 +117,7 @@ offset_top = 408.0
 offset_right = 1663.0
 offset_bottom = 450.0
 text = "hello"
+text = "hello JOY 宝贝儿"
 
 [node name="test_npc" parent="." instance=ExtResource("6_ktvnp")]
 position = Vector2(1443, 525)
