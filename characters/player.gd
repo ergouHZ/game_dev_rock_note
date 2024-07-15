@@ -1,5 +1,5 @@
 extends CharacterBody2D
-@onready var transition_rect = $TransitionColorRect #动画遮罩
+@onready var transition_rect = $TransitionColorRect 
 @export var SPEED: int = 250
 var timer = 0 # 计时器
 const STOP_MOVEMENT_THRESHOLD = 20 # 开始计时的速度阈值
@@ -7,8 +7,8 @@ var is_animation_paused = false  # 新增的布尔变量，用于判断动画暂
 var is_in_conversation = false # 用于判断角色是否在对话中，如果是的话，不能操作
 
 func _ready():
-	transition_rect.color = Color(0, 0, 0, 1)  # 确保初始状态是透明的
-	fade_in()
+	
+	
 	
 	if Global.player_direction != "" :
 		$playerSprite.play(Global.player_direction)
@@ -21,6 +21,8 @@ func _process(delta):
 	var input_direction = Vector2.ZERO #获取输入的向量
 	var playerSprite: AnimatedSprite2D = $playerSprite
 	var interactArea: Area2D = $interactArea_Dialog
+	
+	
 	
 	#当玩家处于对话外的时候才能操作
 	if not is_in_conversation and Global.player_is_movable:
@@ -80,7 +82,7 @@ func _process(delta):
 			timer += delta
 		#print(timer)
 		if timer >= 8:
-			# 播放待机动画,8秒的时候
+			# 时间到的时候播放待机动画
 			playerSprite.play("idle")
 		move_and_slide()
 	else:
@@ -100,13 +102,4 @@ func _on_timeline_ended():
 	# do something else here
 	
 
-func fade_out():
-	var tween = create_tween()
-	tween.tween_property(transition_rect, "color", Color(0, 0, 0, 1), 0.5)
-
-func fade_in():
-	print("fade in")
-	transition_rect.color = Color(0, 0, 0, 1)  # 先设置为不透明
-	var tween = create_tween()
-	tween.tween_property(transition_rect, "color", Color(0, 0, 0, 0), 0.5)
 

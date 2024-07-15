@@ -17,8 +17,12 @@ config/icon="res://icon.svg"
 
 [autoload]
 
-SceneManager="*res://script/SceneManager.gd"
+SceneManager="*res://addons/scene_manager/autoload/scene_manager.tscn"
 Global="*res://script/Global.gd"
+PlayerStats="*res://script/PlayerStats.gd"
+StoryManager="*res://script/StoryManager.gd"
+GameManager="*res://script/GameManager.gd"
+SceneManagerCus="*res://script/SceneManagerCus.gd"
 Dialogic="*res://addons/dialogic/Core/DialogicGameHandler.gd"
 
 [dialogic]
@@ -54,18 +58,14 @@ text/autopauses={}
 
 [display]
 
-window/size/viewport_width=960
-window/size/viewport_height=540
+window/size/viewport_width=1280
+window/size/viewport_height=720
 window/size/mode=2
 window/stretch/mode="canvas_items"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/dialogic/plugin.cfg")
-
-[gui]
-
-theme/custom_font="res://art_assets/SilverFotn/Silver.ttf"
+enabled=PackedStringArray("res://addons/dialogic/plugin.cfg", "res://addons/scene_manager/plugin.cfg")
 
 [importer_defaults]
 

@@ -1,0 +1,74 @@
+[gd_scene load_steps=6 format=3 uid="uid://d15f3phqim6e0"]
+
+[ext_resource type="Texture2D" uid="uid://b58grrit1u5iv" path="res://scene/schoolMap/学校.jpg" id="1_hqc7w"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_g3k8u"]
+font_size = 24
+
+[sub_resource type="GDScript" id="GDScript_5k145"]
+script/source = "extends Button
+const FADE_TO_BLACK = preload(\"res://addons/scene_manager/test/change_scene/transition/fade_to_black.tres\")
+const RADIAL_TO_BLACK = preload(\"res://addons/scene_manager/test/change_scene/transition/radial_to_black.tres\")
+@export_file(\"*.tscn\") var next_scene_path: String = \"res://NewScene.tscn\"
+
+func _on_pressed():
+	#get_node(\"/root/SceneManager\").transition_start(RADIAL_TO_BLACK,true).finished.change_scene_to_packed(load(next_scene_path))
+	SceneManagerCus.on_fade_to_change_scene(next_scene_path)
+	pass # Replace with function body.
+"
+
+[sub_resource type="LabelSettings" id="LabelSettings_4qv6v"]
+font_size = 24
+
+[sub_resource type="GDScript" id="GDScript_jvdah"]
+script/source = "extends Button
+@export_file(\"*.tscn\") var next_scene_path: String = \"res://NewScene.tscn\"
+
+func _on_pressed():
+	SceneManagerCus.on_fade_to_change_scene(next_scene_path)
+	pass # Replace with function body.
+"
+
+[node name="SchoolMain" type="Node2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(653.96, 345.313)
+scale = Vector2(2.04613, 2.04613)
+texture = ExtResource("1_hqc7w")
+
+[node name="Label" type="Label" parent="."]
+offset_left = 186.0
+offset_top = 305.0
+offset_right = 238.0
+offset_bottom = 339.0
+text = "教室"
+label_settings = SubResource("LabelSettings_g3k8u")
+
+[node name="Button" type="Button" parent="Label"]
+layout_mode = 0
+offset_left = -13.0
+offset_top = 46.0
+offset_right = 68.0
+offset_bottom = 101.0
+script = SubResource("GDScript_5k145")
+next_scene_path = "res://scene/classroom1/classroom_1.tscn"
+
+[node name="Label2" type="Label" parent="."]
+offset_left = 367.0
+offset_top = 312.0
+offset_right = 429.0
+offset_bottom = 348.0
+text = "教室2"
+label_settings = SubResource("LabelSettings_4qv6v")
+
+[node name="Button2" type="Button" parent="Label2"]
+layout_mode = 0
+offset_left = 5.0
+offset_top = 41.0
+offset_right = 97.0
+offset_bottom = 101.0
+script = SubResource("GDScript_jvdah")
+next_scene_path = "res://scene/classroom2/classroom_2.tscn"
+
+[connection signal="pressed" from="Label/Button" to="Label/Button" method="_on_pressed"]
+[connection signal="pressed" from="Label2/Button2" to="Label2/Button2" method="_on_pressed"]

@@ -6,6 +6,5 @@ func _on_area_entered(area):
 	print("enterd")
 	var area_name:String = area.get_parent().name
 	if area_name == "player":
-
-		SceneManager.goto_scene(next_scene_path,spawn_point) #手写的切换方法，同时切换场景和应该出现的地点
+		SceneManager.change_scene_to_packed(load(next_scene_path))
 	pass # Replace with function body.
